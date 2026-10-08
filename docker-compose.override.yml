@@ -1,5 +1,5 @@
 # Not part of the release package: Station, restart: unless-stopped on every service, and user: root on the
-# 17 services that load a biometric engine or match templates. Since v5_4.41.1 the images run as uid 10001,
+# 19 services that load a biometric engine or match templates. Since v5_4.41.1 the images run as uid 10001,
 # but the licensing library reads root-only hardware identifiers, derives a different HWID and rejects the
 # license ("License has different HWID than this machine"). Verified on v5_4.43.0.10149; the other 5 services
 # run as uid 10001. Remove user: root once licensing works for uid 10001.
@@ -77,6 +77,12 @@ services:
     restart: unless-stopped
     user: root
   object-detector:
+    restart: unless-stopped
+    user: root
+  palm-detector:
+    restart: unless-stopped
+    user: root
+  palm-extractor:
     restart: unless-stopped
     user: root
   db-synchronization-leader:
