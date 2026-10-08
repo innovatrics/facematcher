@@ -40,11 +40,11 @@ Ports are published on all interfaces with default credentials. Do not expose th
 - `docker-compose.yml`, `dependencies/docker-compose.yml`, `run.sh` - the Innovatrics video processing platform release package (`video_processing_deployment.zip`)
 - `docker-compose.override.yml` - Station, the restart policy and `user: root`, see the comment inside
 
-Not deployed: offline video processing, grouping, palm biometrics, Milvus, Access Controller.
+Not deployed: offline video processing, grouping, Milvus, Access Controller. The palm services run; Station keeps its palm screens off (`PALMS_ENABLED=false` in `.env.station`).
 
 ## Changes to the release package
 
-- `docker-compose.yml`, `.env` - `grouping`, `video-*` and `palm-*` services and their settings removed
+- `docker-compose.yml`, `.env` - `grouping` and `video-*` services and their settings removed
 - `.env` - `REGISTRY` points to Harbor; `Notifications__IncludeTemplates=true`; `Milvus__*` removed; section 4 added
 - `dependencies/docker-compose.yml` - Milvus removed; RabbitMQ pinned to 4.3.6 with `queue_master_locator` permitted; one SeaweedFS data mount
 - `run.sh` - license from `secrets/`, `STATION_PUBLIC_HOST` and the endpoint summary added; Milvus wait removed

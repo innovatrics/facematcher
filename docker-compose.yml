@@ -424,6 +424,32 @@ services:
       <<: [*labels-logging, *labels-metrics, *labels-application]
     expose:
       - 4318
+  palm-detector:
+    image: ${REGISTRY}palm-detector:${VERSION}
+    <<: *common
+    environment:
+      <<: [*common-env, *otel-metrics-prometheus-env, *tracing-env, *onnx-env, *metrics-bands-env]
+      # palm-detector needs SolverIntraThreads=4; the .env default (1) only applies to InterThreads.
+      OnnxRuntimeConfiguration__SolverIntraThreads: 4
+      Warmup__LivenessEnabled:
+      Detection__SolverName:
+    labels:
+      <<: [*labels-logging, *labels-metrics]
+    expose:
+      - 4318
+
+  palm-extractor:
+    image: ${REGISTRY}palm-extractor:${VERSION}
+    <<: *common
+    environment:
+      <<: [*common-env, *otel-metrics-prometheus-env, *tracing-env, *onnx-env, *metrics-bands-env]
+      # palm-extractor needs SolverIntraThreads=4; the .env default (1) only applies to InterThreads.
+      OnnxRuntimeConfiguration__SolverIntraThreads: 4
+    labels:
+      <<: [*labels-logging, *labels-metrics]
+    expose:
+      - 4318
+
   db-synchronization-leader:
     image: ${REGISTRY}db-synchronization-leader:${VERSION}
     <<: *common
