@@ -27,8 +27,8 @@ chmod a+r iengine.lic
 export STATION_PUBLIC_HOST="${STATION_PUBLIC_HOST:-$(hostname)}"
 
 # face-matcher-network lets the dependency and the platform containers reach each other.
-# This is a no-op if the network already exists, which we don't mind.
-docker network create face-matcher-network || true
+# Created once; later runs reuse it.
+docker network inspect face-matcher-network >/dev/null 2>&1 || docker network create face-matcher-network
 
 # load image coordinates and configuration from .env
 VERSION="$(getvalue VERSION)"
